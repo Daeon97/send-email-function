@@ -1,9 +1,23 @@
 const functions = require("firebase-functions");
+const admin = require('firebase-admin')
+const sgMail = require('@sendgrid/mail')
+const dotenv = require('dotenv')
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+dotenv.config()
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+
+const message = {
+    to: 'engelmmanuel@gmail.com',
+    from: 'engelmmanuel@gmail.com',
+    subject: 'Test',
+    text: 'Test email'
+}
+
+sgMail
+    .send(message)
+    .then(() => {
+        console.log('Message sent')
+    })
+    .catch((error) => {
+        console.log(error)
+    })
