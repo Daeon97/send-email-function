@@ -4,7 +4,7 @@
  */
 
 const functions = require("firebase-functions") // Firebase Cloud Functions
-const admin = require('./utils/firebase-admin') // Check out utils/firebase-admin.js for more
+const admin = require('./utils/configs/firebase-admin') // Check out utils/configs/firebase-admin.js for more
 const sendEmail = require('./utils/send-email') // Check out utils/send-email.js for more
 const sendMessage = require('./utils/send-message') // Check out utils/send-message.js for more
 const sendNotification = require('./utils/send-notification') // Check out utils/send-notification.js for more

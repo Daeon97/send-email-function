@@ -4,7 +4,7 @@
  */
 
 const functions = require("firebase-functions") // Firebase Cloud Functions
-const admin = require('./firebase-admin') // Check out firebase-admin.js for more
+const admin = require('./configs/firebase-admin') // Check out configs/firebase-admin.js for more
 const dotenv = require('dotenv') // Helper package for setting up environment variables
 
 // Init dotenv
