@@ -5,23 +5,23 @@
 
 const functions = require("firebase-functions") // Firebase Cloud Functions
 const admin = require('./firebase-admin') // Check out firebase-admin.js for more
+const dotenv = require('dotenv') // Helper package for setting up environment variables
 
-const sendNotification = () => {
-    const token = ''
-    const notificationPayload = {
-        data: {},
+// Init dotenv
+dotenv.config()
+
+const sendNotification = async (title, body) => {
+    const token = (await admin.firestore().doc(`Users/${process.env.ENGELS_ID}`).get()).data()['device_token']
+    const payload = {
+        notification: {
+            title,
+            body
+        },
         token
     }
-    // const notificationPayload = {
-    //     notification: {
-    //         title: '',
-    //         body: ''
-    //     },
-    //     token
-    // }
 
     try {
-        await admin.messaging().sendToDevice(token, notificationPayload)
+        await admin.messaging().send(payload)
         functions.logger.log('From send-notification.js ::', 'Notification sent')
     } catch (e) {
         functions.logger.error('From send-notification.js ::', 'Notification failed to send ::', e)

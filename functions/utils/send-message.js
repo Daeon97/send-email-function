@@ -3,7 +3,7 @@
  * 'Hire Me' section of my portfolio. Check out my portfolio website https://engels-immanuel.web.app 
  */
 
-const sendMessage = () => {
+const sendMessage = async (phone) => {
     //.
 }
 

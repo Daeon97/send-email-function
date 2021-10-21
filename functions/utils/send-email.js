@@ -7,7 +7,7 @@ const functions = require("firebase-functions") // Firebase Cloud Functions
 const sgMail = require('@sendgrid/mail') // SendGrid
 const dotenv = require('dotenv') // Helper package for setting up environment variables
 
-// Init stuff here
+// Init dotenv and sgMail
 dotenv.config()
 sgMail.setApiKey(process.env.SENDGRID_API_KEY) // Please create an account on SendGrid to generate your SendGrid API key
 
