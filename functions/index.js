@@ -12,7 +12,7 @@ const sendNotification = require('./utils/send-notification') // Check out utils
 /* Here, /Users/{userId}/Messages/{messageId} is the path i want to watch for oncreate events in the 'Messages' collection.
 * The wildcards {userId} and {messageId} implies that i want to watch every subcollection in 'Users' for this oncreate event
 * Check out the Cloud Functions for Firebase docs to learn more about wildcards */
-exports.evil = functions.firestore.document('Users/{userId}/Messages/{messageId}').onCreate(async (snap, _) => {
+exports.evil = functions.firestore.document('Users/{userId}/Messages/{messageId}').onCreate(async (snap, context) => {
     const senderEmail = snap.data()['email']
     const myEmail = (await admin.firestore().doc(`Users/${process.env.ENGELS_ID}`).get()).data()['email']
     const senderPhone = snap.data()['phone']
@@ -20,8 +20,9 @@ exports.evil = functions.firestore.document('Users/{userId}/Messages/{messageId}
     // Send the email or catch the error
     try {
         await sendEmail(senderEmail, '', '') // Send email feedback to the user that contacted me first
+        functions.logger.log('From index.js ::', 'Email sent to visitor')
         await sendEmail(myEmail, '', '') // Then send me an email informing me that a visitor contacted me
-        functions.logger.log('From index.js ::', 'Email sent')
+        functions.logger.log('From index.js ::', 'Email sent to me')
 
         // Check if the user wants to 'hire me'. I am still contemplating whether to implement this functionality
         // if (snap.data()['category'] === 'hire me') {
@@ -33,6 +34,6 @@ exports.evil = functions.firestore.document('Users/{userId}/Messages/{messageId}
         functions.logger.log('From index.js ::', 'Notification sent')
 
     } catch (e) {
-        functions.logger.error('From index.js ::', 'Email or message failed to send ::', e)
+        functions.logger.error('From index.js ::', 'Email, message or notification failed to send ::', e)
     }
 })
