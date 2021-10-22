@@ -9,4 +9,4 @@ I wrote this function so that users who visit my portfolio site get an email whe
 
 PS: I wrote my portfolio site and the mobile app (still in development) with Flutter 😉
 
-Feel free to modify and use this function in any of your projects. PR's are also welcomed 🙃
+Feel free to modify and/or use this Firebase Cloud Function in any of your projects. PR's are also welcomed 🙃
