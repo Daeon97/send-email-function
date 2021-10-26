@@ -14,7 +14,7 @@ const sendNotification = require('./utils/send-notification') // Check out utils
 * Check out the Cloud Functions for Firebase docs to learn more about wildcards */
 exports.evil = functions.firestore.document('Users/{userId}/Messages/{messageId}').onCreate(async (snap, context) => {
     const senderEmail = snap.data()['email']
-    const myEmail = (await admin.firestore().doc(`Users/${process.env.ENGELS_ID}`).get()).data()['email']
+    // const myEmail = (await admin.firestore().doc(`Users/${process.env.ENGELS_ID}`).get()).data()['email']
     const senderPhone = snap.data()['phone']
 
     // Send the email or catch the error
@@ -24,7 +24,8 @@ exports.evil = functions.firestore.document('Users/{userId}/Messages/{messageId}
         await sendEmail(myEmail, '', '') // Then send me an email informing me that a visitor contacted me
         functions.logger.log('From index.js ::', 'Email sent to me')
 
-        // Check if the user wants to 'hire me'. I am still contemplating whether to implement this functionality
+        // I am still contemplating whether to implement this functionality
+        // Check if the user wants to 'hire me'
         // if (snap.data()['category'] === 'hire me') {
         //     await sendMessage(senderPhone) // Send text message feedback only to a user that wants to 'hire me'
         //     functions.logger.log('From index.js ::', 'Message sent')

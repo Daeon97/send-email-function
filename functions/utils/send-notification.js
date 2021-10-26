@@ -11,7 +11,7 @@ const dotenv = require('dotenv') // Helper package for setting up environment va
 dotenv.config()
 
 const sendNotification = async (title, body) => {
-    const token = (await admin.firestore().doc(`Users/${process.env.ENGELS_ID}`).get()).data()['device_token']
+    const token = (await admin.firestore().doc(`Users/${functions.config().engels.id/*process.env.ENGELS_ID*/}`).get()).data()['device_token']
     const payload = {
         notification: {
             title,
@@ -27,5 +27,7 @@ const sendNotification = async (title, body) => {
         functions.logger.error('From send-notification.js ::', 'Notification failed to send ::', e)
     }
 }
+
+// sendNotification('Test title', 'Test body')
 
 module.exports = sendNotification
