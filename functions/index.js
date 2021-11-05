@@ -31,7 +31,7 @@ exports.evil = functions.firestore.document('Users/{userId}/Messages/{messageId}
         //     functions.logger.log('From index.js ::', 'Message sent')
         // }
 
-        await sendNotification('', '') // Instruct Firebase Cloud Messaging to send the client a notification
+        await sendNotification('', '') // Instruct Firebase Cloud Messaging to send the client mobile application a notification
         functions.logger.log('From index.js ::', 'Notification sent')
 
     } catch (e) {
