@@ -13,11 +13,13 @@ dotenv.config()
 const sendNotification = async (title, body) => {
     const token = (await admin.firestore().doc(`Users/${functions.config().engels.id/*process.env.ENGELS_ID*/}`).get()).data()['device_token']
     const payload = {
-        notification: {
-            title,
-            body
-        },
-        token
+        message: {
+            notification: {
+                title,
+                body
+            },
+            token
+        }
     }
 
     try {
