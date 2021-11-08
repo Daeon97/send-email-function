@@ -5,17 +5,15 @@
 
 const functions = require("firebase-functions") // Firebase Cloud Functions
 const sgMail = require('@sendgrid/mail') // SendGrid
-const dotenv = require('dotenv') // Helper package for setting up environment variables
+const { sendgridApiKey, engelsId } = require('./configs/environment-variables') // Check out configs/environment-variables.js for more
 const admin = require('./configs/firebase-admin') // Check out configs/firebase-admin.js for more
 
-// Init dotenv and sgMail
-dotenv.config()
-sgMail.setApiKey(functions.config().sendgrid.api_key/*process.env.SENDGRID_API_KEY*/) // Please create an account on SendGrid to generate your SendGrid API key
+sgMail.setApiKey(sendgridApiKey) // Please create an account on SendGrid to generate your SendGrid API key
 
 const sendEmail = async (to, subject, text) => {
     const message = {
         to,
-        from: (await admin.firestore().doc(`Users/${functions.config().engels.id/*process.env.ENGELS_ID*/}`).get()).data()['email'],  // TODO: Need to setup a custom domain for this
+        from: (await admin.firestore().doc(`Users/${engelsId}`).get()).data()['email'],  // TODO: Need to setup a custom domain for from email
         subject,
         text
     }

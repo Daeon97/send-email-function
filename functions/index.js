@@ -8,14 +8,15 @@ const admin = require('./utils/configs/firebase-admin') // Check out utils/confi
 const sendEmail = require('./utils/send-email') // Check out utils/send-email.js for more
 const sendMessage = require('./utils/send-message') // Check out utils/send-message.js for more
 const sendNotification = require('./utils/send-notification') // Check out utils/send-notification.js for more
+const { engelsId } = require('./configs/environment-variables') // Check out configs/environment-variables.js for more
 
-/* Here, /Users/{userId}/Messages/{messageId} is the path i want to watch for oncreate events in the 'Messages' collection.
-* The wildcards {userId} and {messageId} implies that i want to watch every subcollection in 'Users' for this oncreate event
+/* Here, /Users/{userId}/Messages/{messageId} is the path i want to watch for onCreate events in the 'Messages' collection.
+* The wildcards {userId} and {messageId} implies that i want to watch every subcollection in 'Users' for this onCreate event
 * Check out the Cloud Functions for Firebase docs to learn more about wildcards */
 exports.evil = functions.firestore.document('Users/{userId}/Messages/{messageId}').onCreate(async (snap, context) => {
     const senderEmail = snap.data()['email']
-    // const myEmail = (await admin.firestore().doc(`Users/${process.env.ENGELS_ID}`).get()).data()['email']
-    const senderPhone = snap.data()['phone']
+    const myEmail = (await admin.firestore().doc(`Users/${engelsId}`).get()).data()['email']
+    // const senderPhone = snap.data()['phone']
 
     // Send the email or catch the error
     try {

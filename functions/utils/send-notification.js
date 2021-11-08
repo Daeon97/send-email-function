@@ -5,14 +5,14 @@
 
 const functions = require("firebase-functions") // Firebase Cloud Functions
 const admin = require('./configs/firebase-admin') // Check out configs/firebase-admin.js for more
-const dotenv = require('dotenv') // Helper package for setting up environment variables
-
-// Init dotenv
-dotenv.config()
+const { engelsId } = require('./configs/environment-variables') // Check out configs/environment-variables.js for more
 
 const sendNotification = async (title, body) => {
-    const token = (await admin.firestore().doc(`Users/${functions.config().engels.id/*process.env.ENGELS_ID*/}`).get()).data()['device_token']
+    const token = (await admin.firestore().doc(`Users/${engelsId}`).get()).data()['device_token']
     const payload = {
+        /**
+         * I am not yet certain about the structure. Need to check Firebase Cloud Messaging docs again
+         */
         message: {
             notification: {
                 title,
